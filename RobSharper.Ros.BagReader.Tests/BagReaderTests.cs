@@ -29,9 +29,12 @@ namespace RobSharper.Ros.BagReader.Tests
         public void Can_read_bag(string bagfile)
         {
             SetBagFile(bagfile);
-            
-            var rosbag = BagReaderFactory.Create(_bagStream, RecordVisitor.NullVisitor);
+
+            var visitorMock = new Mock<IBagRecordVisitor>();
+            var rosbag = BagReaderFactory.Create(_bagStream, visitorMock.Object);
             rosbag.ProcessAll();
+
+            visitorMock.Verify(x => x.Visit(It.IsAny<Chunk>()), Times.AtLeastOnce());
         }
 
 

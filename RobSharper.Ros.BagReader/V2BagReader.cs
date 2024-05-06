@@ -69,7 +69,7 @@ namespace RobSharper.Ros.BagReader
 
         private RosBinaryReader CreateRecordDataReader()
         {
-            var length = _reader.ReadInt32();
+            var length = _reader.ReadUInt32();
             var confinedStream = new ConfinedReadOnlyStream(_stream, length);
             var dataReader = new RosBinaryReader(confinedStream);
 
